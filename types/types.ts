@@ -23,7 +23,7 @@ export interface Products {
 
 export interface Image {
   id: string;
-  name: string;
+  url: string;
 }
 
 export interface Size {

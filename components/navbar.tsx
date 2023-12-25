@@ -1,8 +1,10 @@
 import Link from "next/link";
-import Container from "./ui/Container";
-import MainNav from "./MainNav";
-import getCategories from "@/actions/GetCategory";
-import NavbarActions from "./NavbarActions";
+
+import Container from "@/components/ui/container";
+import MainNav from "@/components/main-nav";
+import getCategories from "@/actions/get-categories";
+import NavbarActions from "@/components/navbar-actions";
+import CartSheet from "@/components/sheet/cart-sheet";
 
 export const revalidate = 0;
 
@@ -17,7 +19,8 @@ const Navbar = async () => {
             <p className="font-bold text-xl">ORYON</p>
           </Link>
           <MainNav data={categories} />
-          <NavbarActions />
+          {/* <NavbarActions /> */}
+          <CartSheet/>
         </div>
       </Container>
     </div>
