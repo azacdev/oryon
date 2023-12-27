@@ -6,13 +6,17 @@ import { ProductCardSkeleton } from "@/components/product-card-skeleton";
 
 interface ProductListProps {
   title: string;
+  description?: string;
   items: Products[];
 }
 
-const ProductList = ({ title, items }: ProductListProps) => {
+const ProductList = ({ title, description, items }: ProductListProps) => {
   return (
     <div className="space-y-4">
-      <h3 className="font-bold text-3xl">{title}</h3>
+      <div>
+        <h3 className="font-bold text-3xl">{title}</h3>
+        <p className="text-gray-500 text-2xl">{description}</p>
+      </div>
       {items.length === 0 && <NoResults />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <Suspense
@@ -21,7 +25,7 @@ const ProductList = ({ title, items }: ProductListProps) => {
           ))}
         >
           {items.map((item) => (
-            <ProductCard key={item.id} data={item} />
+            <ProductCard key={item.id} product={item} />
           ))}
         </Suspense>
       </div>

@@ -6,15 +6,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface MainNavProps {
-  data: Category[];
+  categories: Category[];
 }
-const MainNav = ({ data }: MainNavProps) => {
+
+const MainNav = ({ categories }: MainNavProps) => {
   const pathname = usePathname();
 
-  const routes = data.map((route) => ({
-    href: `/category/${route.id}`,
-    label: route.name,
-    active: pathname === `/category/${route.id}`,
+  const routes = categories.map((category) => ({
+    href: `/category/${category.id}`,
+    label: category.name,
+    active: pathname === `/category/${category.id}`,
   }));
 
   return (

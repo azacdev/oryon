@@ -15,28 +15,37 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./card";
-import { AspectRatio } from "./aspect-ratio";
-import { PlaceholderImage } from "../placeholder-image";
+} from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { PlaceholderImage } from "@/components/placeholder-image";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { MouseEventHandler } from "react";
+import usePreviewModal from "@/hooks/use-preview-modals";
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: Products;
+  product: Products;
 }
 
-const ProductCard = ({ data, className, ...props }: ProductCardProps) => {
+const ProductCard = ({ product, className, ...props }: ProductCardProps) => {
+  const previewModal = usePreviewModal();
+
+  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    previewModal.onOpen(product);
+  };
 
   return (
     <Card
       className={cn("h-full w-full overflow-hidden rounded-sm", className)}
       {...props}
     >
-      <Link href={`/data/${data.id}`}>
+      <Link href={`/product/${product.id}`}>
         <CardHeader className="border-b p-0">
           <AspectRatio ratio={4 / 3}>
-            {data.images?.length ? (
+            {product.images?.length ? (
               <Image
-                src={data.images[0]?.url}
+                src={product.images[0]?.url}
                 alt="Image"
                 className="aspect-square object-cover"
                 fill
@@ -47,38 +56,29 @@ const ProductCard = ({ data, className, ...props }: ProductCardProps) => {
             )}
           </AspectRatio>
         </CardHeader>
-        <span className="sr-only">{data.name}</span>
+        <span className="sr-only">{product.name}</span>
       </Link>
-      <Link href={`/data/${data.id}`} tabIndex={-1}>
+      <Link href={`/product/${product.id}`} tabIndex={-1}>
         <CardContent className="space-y-1.5 p-4">
-          <CardTitle className="line-clamp-1">{data.name}</CardTitle>
+          <CardTitle className="line-clamp-1">{product.name}</CardTitle>
           <CardDescription className="line-clamp-1">
-            <Currency value={data?.price} />
+            <Currency value={product?.price} />
           </CardDescription>
         </CardContent>
       </Link>
       <CardFooter className="p-4 pt-1">
         <div className="flex w-full items-center space-x-2">
-          <Button
-            size="sm"
-            className="h-8 w-full rounded-sm"
-          >
+          <Button size="sm" className="h-8 w-full rounded-sm">
             Add to cart
           </Button>
-          <Link
-            href={`/preview/data/${data.id}`}
-            title="Preview"
-            className={cn(
-              buttonVariants({
-                variant: "secondary",
-                size: "icon",
-                className: "h-8 w-8 shrink-0",
-              })
-            )}
+          <Button variant="outline"
+          className="h-8 w-12"
+          title="Preview"
+            onClick={onPreview}
           >
-            <EyeOpenIcon className="h-4 w-4" aria-hidden="true" />
+            <EyeOpenIcon className="h-4 w-4 text-black" aria-hidden="true" />
             <span className="sr-only">Preview</span>
-          </Link>
+          </Button>
         </div>
       </CardFooter>
     </Card>
