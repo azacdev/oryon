@@ -18,17 +18,23 @@ import {
 } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { PlaceholderImage } from "@/components/placeholder-image";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modals";
+import useCart from "@/hooks/use-cart";
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   product: Products;
 }
 
 const ProductCard = ({ product, className, ...props }: ProductCardProps) => {
+  const cart = useCart()
   const previewModal = usePreviewModal();
+  
+  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    cart.addItem(product);
+  };
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
@@ -68,12 +74,13 @@ const ProductCard = ({ product, className, ...props }: ProductCardProps) => {
       </Link>
       <CardFooter className="p-4 pt-1">
         <div className="flex w-full items-center space-x-2">
-          <Button size="sm" className="h-8 w-full rounded-sm">
+          <Button size="sm" className="h-8 w-full rounded-sm" onClick={onAddToCart}>
             Add to cart
           </Button>
-          <Button variant="outline"
-          className="h-8 w-12"
-          title="Preview"
+          <Button
+            variant="outline"
+            className="h-8 w-12"
+            title="Preview"
             onClick={onPreview}
           >
             <EyeOpenIcon className="h-4 w-4 text-black" aria-hidden="true" />

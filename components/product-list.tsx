@@ -2,7 +2,7 @@ import { Products } from "@/types/types";
 import NoResults from "@/components/ui/no-results";
 import ProductCard from "@/components/ui/product-card";
 import { Suspense } from "react";
-import { ProductCardSkeleton } from "@/components/product-card-skeleton";
+import { ProductCardSkeleton } from "@/components/skeletons/product-card-skeleton";
 
 interface ProductListProps {
   title: string;

@@ -35,7 +35,7 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
     <div className="bg-white">
       <Container>
         <Billboard data={category.billboard} />
-        <div className="px-4 sm:px-6 lg-px-8 pb-24">
+        <div className="px-4 sm:px-6 lg-px-8 space-y-10 pb-10">
           <div className="grid items-center gap-4 lg:gap-8 pb-8 pt-6 md:py-8">
             <FilterDrawer sizes={sizes} colors={colors} />
             <div>

@@ -21,7 +21,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   return (
     <div className="bg-white">
       <Container>
-        <div className="px-4 py-10 sm:px-6 lg:px-8">
+        <div className="px-4 py-10 sm:px-6 lg:px-8 space-y-10 pb-10">
           <div className="flex flex-col gap-8 md:flex-row md:gap-16">
             <GalleryTab
               className="w-full md:w-1/2"
@@ -33,8 +33,8 @@ const ProductPage = async ({ params }: ProductPageProps) => {
             <Separator className="mt-4 md:hidden" />
             <Info product={product} />
           </div>
+          <ProductList title="Related Items" items={suggestedProduct} />
         </div>
-        <ProductList title="Related Items" items={suggestedProduct} />
       </Container>
     </div>
   );

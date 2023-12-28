@@ -11,11 +11,20 @@ import {
 import Currency from "@/components/ui/currency";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "./ui/button";
+import useCart from "@/hooks/use-cart";
+import { MouseEventHandler } from "react";
 
 interface InfoProps {
   product: Products;
 }
 const Info = ({ product }: InfoProps) => {
+  const cart = useCart()
+  
+  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    cart.addItem(product);
+  };
+
   return (
     <div className="flex w-full flex-col gap-4 md:w-1/2">
       <div className="space-y-2">
@@ -40,7 +49,7 @@ const Info = ({ product }: InfoProps) => {
       </div>
 
       <div className="mt-10">
-        <Button variant="default">Add to cart</Button>
+        <Button variant="default" onClick={onAddToCart}>Add to cart</Button>
       </div>
       {/* <Accordion
           type="single"

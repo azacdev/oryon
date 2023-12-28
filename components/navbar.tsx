@@ -3,7 +3,7 @@ import Link from "next/link";
 import Container from "@/components/ui/container";
 import MainNav from "@/components/main-nav";
 import getCategories from "@/actions/get-categories";
-import CartSheet from "@/components/sheet/cart-sheet";
+import CartSheet from "@/components/cart/cart-sheet";
 
 export const revalidate = 0;
 
