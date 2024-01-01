@@ -31,8 +31,6 @@ const CartSheet = () => {
     setIsMounted(true);
   }, []);
 
-
-
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
@@ -109,7 +107,7 @@ const CartSheet = () => {
               </div>
               <SheetFooter className="flex flex-col">
                 <SheetTrigger asChild>
-                  <Button className="w-full" size="sm" onClick={onCheckout}>
+                  <Button disabled={items.length === 0} className="w-full" size="sm" onClick={onCheckout}>
                     Checkout
                   </Button>
                 </SheetTrigger>
