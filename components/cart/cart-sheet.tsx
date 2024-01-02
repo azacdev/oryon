@@ -62,7 +62,6 @@ const CartSheet = () => {
         productsIds: items.map((item) => item.id),
       }
     );
-
     window.location = response.data.url;
   };
 
