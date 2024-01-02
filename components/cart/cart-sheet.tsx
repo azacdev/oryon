@@ -53,6 +53,8 @@ const CartSheet = () => {
     return total + Number(item.price);
   }, 0);
 
+  console.log(items.map((item) => item.id));
+  
   const onCheckout = async () => {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
@@ -97,10 +99,6 @@ const CartSheet = () => {
                   <span>Free</span>
                 </div>
                 <div className="flex">
-                  <span className="flex-1">Taxes</span>
-                  <span>Calculated at checkout</span>
-                </div>
-                <div className="flex">
                   <span className="flex-1">Total</span>
                   <Currency value={totalPrice} />
                 </div>
@@ -111,9 +109,6 @@ const CartSheet = () => {
                     Checkout
                   </Button>
                 </SheetTrigger>
-                <Button variant="outline" className="w-full" size="sm">
-                  Clear Cart
-                </Button>
               </SheetFooter>
             </div>
           </>
