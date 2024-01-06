@@ -1,11 +1,20 @@
+"use client";
+
 import Link from "next/link";
 
 import { JoinNewsletterForm } from "./forms/join-newsletter-form";
 import Container from "@/components/ui/container";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+
   return (
-    <footer className="w-full border-t bg-background">
+    <footer
+      className={`${
+        pathname.endsWith("/checkout") ? "hidden" : "block"
+      } w-full border-t bg-background`}
+    >
       <Container>
         <div className="py-6 px-4 sm:px-6 lg:px-8">
           <section className="flex flex-col gap-10 lg:flex-row lg:gap-20">

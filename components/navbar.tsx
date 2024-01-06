@@ -2,14 +2,12 @@ import Link from "next/link";
 
 import Container from "@/components/ui/container";
 import MainNav from "@/components/main-nav";
-import getCategories from "@/actions/get-categories";
 import CartSheet from "@/components/cart/cart-sheet";
-
-export const revalidate = 0;
+import getCategories from "@/actions/get-categories";
 
 const Navbar = async () => {
   const categories = await getCategories();
-
+  
   return (
     <div className="border-b">
       <Container>
@@ -18,7 +16,7 @@ const Navbar = async () => {
             <p className="font-bold text-xl">ORYON</p>
           </Link>
           <MainNav categories={categories} />
-          <CartSheet/>
+          <CartSheet />
         </div>
       </Container>
     </div>

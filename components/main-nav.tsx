@@ -1,15 +1,18 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { Category } from "@/types/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { Category } from "@/types/types";
+import { cn } from "@/lib/utils";
+
 interface MainNavProps {
-  categories: Category[];
+  categories: Category[]
 }
 
-const MainNav = ({ categories }: MainNavProps) => {
+export const revalidate = 0;
+
+const MainNav = ({categories}: MainNavProps) => {
   const pathname = usePathname();
 
   const routes = categories.map((category) => ({

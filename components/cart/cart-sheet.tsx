@@ -1,10 +1,9 @@
 "use client";
 
-import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ShoppingCart } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import useCart from "@/hooks/use-cart";
 import { cn } from "@/lib/utils";
@@ -31,6 +30,7 @@ const CartSheet = () => {
     setIsMounted(true);
   }, []);
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
@@ -48,24 +48,10 @@ const CartSheet = () => {
   if (!isMounted) {
     return null;
   }
-  
+
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price);
   }, 0);
-
-  console.log(items.map((item) => item.id));
-  
-  const onCheckout = async () => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-      {
-        productsIds: items.map((item) => item.id),
-      }
-    );
-    console.log(response.data.url);
-    
-    window.location = response.data.url;
-  };
 
   return (
     <Sheet>
@@ -106,8 +92,13 @@ const CartSheet = () => {
               </div>
               <SheetFooter className="flex flex-col">
                 <SheetTrigger asChild>
-                  <Button disabled={items.length === 0} className="w-full" size="sm" onClick={onCheckout}>
-                    Checkout
+                  <Button
+                    disabled={items.length === 0}
+                    className="w-full"
+                    size="sm"
+                    onClick={() => router.push("/checkout")}
+                  >
+                    Continue to checkout
                   </Button>
                 </SheetTrigger>
               </SheetFooter>

@@ -1,17 +1,16 @@
 import Image from "next/image";
 
+import useCart from "@/hooks/use-cart";
 import { Slot } from "@radix-ui/react-slot";
-
 import { cn, formatter } from "@/lib/utils";
+import { TrashIcon } from "lucide-react";
+import { Products } from "@/types/types";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { UpdateCart } from "@/components/cart/update-cart";
 import { Icons } from "@/components/icons";
-import { Products } from "@/types/types";
-import Currency from "../ui/currency";
-import useCart from "@/hooks/use-cart";
-import { TrashIcon } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { UpdateCart } from "@/components/cart/update-cart";
 
 interface CartLineItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   items: Products[];
