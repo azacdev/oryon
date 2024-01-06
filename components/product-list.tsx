@@ -13,9 +13,13 @@ interface ProductListProps {
 const ProductList = ({ title, description, items }: ProductListProps) => {
   return (
     <div className="space-y-4">
-      <div>
-        <h3 className="font-bold text-3xl">{title}</h3>
-        <p className="text-gray-500 text-2xl">{description}</p>
+      <div className="max-w-[58rem] flex-1 space-y-1">
+        <h3 className="font-heading text-3xl font-bold leading-[1.1] md:text-4xl">
+          {title}
+        </h3>
+        <p className="max-w-[46rem] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+          {description}
+        </p>
       </div>
       {items.length === 0 && <NoResults />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
