@@ -3,7 +3,9 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import axios from "axios";
+import useCart from "@/hooks/use-cart";
 
 import {
   Form,
@@ -22,28 +24,62 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { PaystackButton } from "react-paystack";
+import { PaystackProps } from "react-paystack/dist/types";
+import { useEffect, useState } from "react";
+import { Button, buttonVariants } from "@/components/ui/button";
+
+type referenceObj = {
+  message: string;
+  reference: string;
+  status: "sucess" | "failure";
+  trans: string;
+  transaction: string;
+  trxref: string;
+};
 
 const formSchema = z.object({
-  name: z.string().min(1, "Complainant name is required").max(30),
+  name: z.string().min(1, "Name is required").max(30),
   email: z.string().min(1, "Email is required").email("Invalid email"),
-  phone: z.number().min(1, "Phone number is required").max(15),
-  state: z.string().min(1, "Description is required").max(5000),
+  phone: z.string().min(1, "Phone number is required").max(15),
+  state: z.string().min(0, "State is required").max(50),
 });
 
 const CheckoutForm = () => {
+  const [ref, setRef] = useState("");
+  const [success, setSuccess] = useState(false);
+  const router = useRouter();
+  const items = useCart((state) => state.items);
+  const removeAll = useCart((state) => state.removeAll);
+
+  useEffect(() => {
+    setSuccess(false);
+    setRef("" + Math.floor(Math.random() * 1000000000 + 1));
+  }, [success]);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
-      phone: null,
+      phone: "",
       state: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          productIds: items.map((item) => item.id),
+          values: values,
+        }
+      );
+      window.location.href = data.data.authorization_url;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -130,11 +166,9 @@ const CheckoutForm = () => {
             )}
           />
         </div>
-        <div className="flex">
-          <Button className="w-full mt-12 lg:mt-6" type="submit" variant="default">
-            Proceed with payment
-          </Button>
-        </div>
+        <Button type="submit" className="w-full">
+          Proceed with payment
+        </Button>
       </form>
     </Form>
   );
