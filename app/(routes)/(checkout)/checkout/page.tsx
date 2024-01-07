@@ -5,7 +5,7 @@ export const revalidate = 0;
 
 const CheckoutPage = async () => {
   return (
-    <section className="relative flex h-full min-h-[100dvh] flex-col items-start justify-center lg:h-[100dvh] lg:flex-row lg:overflow-hidden">
+    <section className="relative grid h-full min-h-[100dvh] grid-cols-1 items-start justify-center lg:h-[100dvh] lg:grid-cols-2 lg:overflow-hidden">
       <CheckoutCart />
       <CheckoutForm />
     </section>

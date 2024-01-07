@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import useCart from "@/hooks/use-cart";
 
@@ -24,19 +24,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import { PaystackButton } from "react-paystack";
-import { PaystackProps } from "react-paystack/dist/types";
-import { useEffect, useState } from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-
-type referenceObj = {
-  message: string;
-  reference: string;
-  status: "sucess" | "failure";
-  trans: string;
-  transaction: string;
-  trxref: string;
-};
+import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required").max(30),
@@ -46,16 +35,21 @@ const formSchema = z.object({
 });
 
 const CheckoutForm = () => {
-  const [ref, setRef] = useState("");
-  const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
 
   useEffect(() => {
-    setSuccess(false);
-    setRef("" + Math.floor(Math.random() * 1000000000 + 1));
-  }, [success]);
+    if (searchParams.get("sucess")) {
+      toast("Payment completed");
+      removeAll();
+    }
+
+    if (searchParams.get("canceled")) {
+      toast("Something went wrong");
+    }
+  }, [searchParams, removeAll]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,7 +80,7 @@ const CheckoutForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="h-full w-full flex-1 bg-white pb-12 pt-10 lg:flex-initial lg:pl-12 lg:pt-16 px-8 mx-auto max-w-xl"
+        className="h-full w-full flex-1pb-12 pt-10 lg:flex-initial lg:pt-16 px-8 mx-auto max-w-xl"
       >
         <div className="space-y-2 flex flex-col gap-4">
           <FormField
@@ -166,7 +160,7 @@ const CheckoutForm = () => {
             )}
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full mt-6 lg:mt-12">
           Proceed with payment
         </Button>
       </form>

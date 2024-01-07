@@ -29,9 +29,9 @@ const CheckoutCart = () => {
   }
 
   return (
-    <div className="w-full space-y-12 pt-8 lg:pt-16">
+    <div className="w-full flex-1 lg:flex-initial space-y-12 pt-8 lg:pt-16">
       <div className="fixed top-0 z-40 h-16 w-full bg-[#09090b] py-4 lg:static lg:top-auto lg:z-0 lg:h-0 lg:py-0">
-        <div className="container flex max-w-xl items-center justify-between space-x-2 lg:ml-auto lg:mr-0 lg:pr-[4.5rem]">
+        <div className="container flex max-w-xl items-center justify-between space-x-2 ">
           <Link
             aria-label="Back to home"
             href="/"
@@ -73,7 +73,7 @@ const CheckoutCart = () => {
           </Drawer>
         </div>
       </div>
-      <div className="container flex max-w-xl flex-col items-center space-y-1 lg:ml-auto lg:mr-0 lg:items-start lg:pr-[4.5rem]">
+      <div className="container flex max-w-xl flex-col items-center space-y-1  lg:items-start">
         <div className="line-clamp-1 font-semibold text-muted-foreground">
           Pay Oryon
         </div>
@@ -82,7 +82,7 @@ const CheckoutCart = () => {
       <CartLineItems
         items={items}
         isEditable={false}
-        className="container hidden w-full max-w-xl lg:ml-auto lg:mr-0 lg:flex lg:max-h-[580px] lg:pr-[4.5rem]"
+        className="container hidden w-full max-w-xl  lg:flex lg:max-h-[580px] "
       />
     </div>
   );
