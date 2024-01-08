@@ -4,6 +4,7 @@ import Container from "@/components/ui/container";
 import MainNav from "@/components/main-nav";
 import CartSheet from "@/components/cart/cart-sheet";
 import getCategories from "@/actions/get-categories";
+import { ProductsCommandMenu } from "./products-command-menu";
 
 const Navbar = async () => {
   const categories = await getCategories();
@@ -16,7 +17,11 @@ const Navbar = async () => {
             <p className="font-bold text-xl">ORYON</p>
           </Link>
           <MainNav categories={categories} />
+
+          <div className="flex items-center space-x-2 ml-auto">
+          <ProductsCommandMenu />
           <CartSheet />
+          </div>
         </div>
       </Container>
     </div>

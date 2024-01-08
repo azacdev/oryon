@@ -56,7 +56,7 @@ const CartSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="relative ml-auto ">
+        <Button variant="outline" size="icon" className="relative">
           {items.length > 0 && (
             <Badge
               variant="secondary"
