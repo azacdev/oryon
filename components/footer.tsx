@@ -194,7 +194,7 @@ const Footer = () => {
           </section>
           <section className="mx-auto py-10">
             <p className="text-center">
-              &copy; 2023 Oryon, Inc, All rights reserved
+              &copy; {new Date().getFullYear()} Oryon, Inc, All rights reserved
             </p>
           </section>
         </div>
