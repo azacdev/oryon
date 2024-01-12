@@ -20,9 +20,7 @@ const CheckoutCart = () => {
   }, []);
 
   const items = useCart((state) => state.cart);
-  const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.price);
-  }, 0);
+  const totalPrice = useCart((state) => state.totalPrice);
 
   if (!isMounted) {
     return null;
@@ -57,7 +55,6 @@ const CheckoutCart = () => {
             <DrawerContent className="mx-auto flex h-[82%] w-full max-w-4xl flex-col space-y-6 border pb-6 pt-8">
               <CartLineItems
                 items={items}
-                variant="minimal"
                 isEditable={false}
                 className="container h-full flex-1 pr-8"
               />
@@ -65,7 +62,7 @@ const CheckoutCart = () => {
                 <Separator />
                 <div className="flex font-medium">
                   <div className="flex-1">
-                    Total <Currency value={totalPrice} />
+                    Total <Currency value={totalPrice()} />
                   </div>
                 </div>
               </div>
@@ -77,7 +74,7 @@ const CheckoutCart = () => {
         <div className="line-clamp-1 font-semibold text-muted-foreground">
           Pay Oryon
         </div>
-        <Currency value={totalPrice} />
+        <Currency value={totalPrice()} />
       </div>
       <CartLineItems
         items={items}

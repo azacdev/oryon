@@ -17,7 +17,6 @@ interface CartLineItemsProps extends React.HTMLAttributes<HTMLDivElement> {
 export function CartLineItems({
   items,
   isScrollable = true,
-  isEditable = true,
   className,
   ...props
 }: CartLineItemsProps) {
