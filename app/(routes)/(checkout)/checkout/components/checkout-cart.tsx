@@ -19,7 +19,7 @@ const CheckoutCart = () => {
     setIsMounted(true);
   }, []);
 
-  const items = useCart((state) => state.items);
+  const items = useCart((state) => state.cart);
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price);
   }, 0);
