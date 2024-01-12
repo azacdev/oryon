@@ -1,11 +1,14 @@
 "use client";
 
+import { MouseEventHandler } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 
 import { Products } from "@/types/types";
+import usePreviewModal from "@/hooks/use-preview-modals";
+import useCart from "@/hooks/use-cart";
+
 import Currency from "@/components/ui/currency";
 import { cn } from "@/lib/utils";
 import {
@@ -19,9 +22,6 @@ import {
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { PlaceholderImage } from "@/components/placeholder-image";
 import { Button } from "@/components/ui/button";
-import { MouseEventHandler } from "react";
-import usePreviewModal from "@/hooks/use-preview-modals";
-import useCart from "@/hooks/use-cart";
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   product: Products;

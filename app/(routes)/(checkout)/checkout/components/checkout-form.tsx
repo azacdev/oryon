@@ -37,7 +37,7 @@ const formSchema = z.object({
 const CheckoutForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const items = useCart((state) => state.items);
+  const items = useCart((state) => state.cart);
   const removeAll = useCart((state) => state.removeAll);
 
   useEffect(() => {

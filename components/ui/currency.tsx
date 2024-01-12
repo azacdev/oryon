@@ -1,6 +1,5 @@
 "use client";
 
-import { formatter } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 interface CurrencyProps {
@@ -18,7 +17,8 @@ const Currency = ({ value }: CurrencyProps) => {
     return null;
   }
 
-  return <span className="font-semibold">{formatter.format(Number(value))}</span>;
+  return <span className="font-semibold">NGN {Number(value).toLocaleString()}</span>;
+
 };
 
 export default Currency;

@@ -38,7 +38,7 @@ export function UpdateCart({ data }: UpdateCartProps) {
   };
 
   return (
-    <div className="ml-4 flex w-full items-center justify-between space-x-2 xs:w-auto xs:justify-normal">
+    <div className="flex w-full items-center justify-between space-x-2 sm:w-auto sm:justify-normal">
       <div className="flex items-center">
         <Button
           variant="outline"

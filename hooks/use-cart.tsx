@@ -16,6 +16,7 @@ interface CartStore {
   increaseQuantity: (id: string, maxQuantity: number) => void;
   decreaseQuantity: (id: string) => void;
   removeAll: () => void;
+  totalPrice: () => number;
 }
 
 const useCart = create(
@@ -48,6 +49,15 @@ const useCart = create(
       },
       removeItem: (id: string) => {
         set({ cart: [...get().cart.filter((item) => item.id !== id)] });
+      },
+      totalPrice: () => {
+        const { cart } = get();
+        if (cart.length) {
+          return cart
+            .map((item) => item.quantity * Number(item.price))
+            .reduce((a, b) => a + b);
+        }
+        return 0;
       },
       removeAll: () => set({ cart: [] }),
     }),
@@ -101,24 +111,6 @@ const decrementInCart = (cart: CartItem[], id: string): CartItem[] => {
       if (item.id === id) {
         const itemQuantity = item.quantity > 1 ? item.quantity - 1 : 1;
         return { ...item, quantity: itemQuantity };
-      }
-      return item;
-    });
-  }
-  return cart;
-};
-
-const setCountInCart = (
-  cart: CartItem[],
-  id: string,
-  quantity: number
-): CartItem[] => {
-  const item = cart.find((item) => item.id === id);
-  if (item) {
-    return cart.map((item) => {
-      if (item.id === id) {
-        const itemCount = quantity >= 1 ? quantity : 1;
-        return { ...item, quantity: itemCount };
       }
       return item;
     });

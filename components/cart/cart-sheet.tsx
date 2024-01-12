@@ -34,6 +34,7 @@ const CartSheet = () => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.cart);
   const removeAll = useCart((state) => state.removeAll);
+  const totalPrice = useCart((state) => state.totalPrice);
 
   useEffect(() => {
     if (searchParams.get("success")) {
@@ -49,10 +50,6 @@ const CartSheet = () => {
     return null;
   }
 
-  const totalPrice = items.reduce((total, item) => {
-    return total + Number(item.price);
-  }, 0);
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -61,8 +58,8 @@ const CartSheet = () => {
             <Badge
               variant="secondary"
               className="absolute -right-2 -top-2 h-6 w-6 justify-center rounded-full p-2.5"
-            >0
-              {items.length}
+            >
+              0{items.length}
             </Badge>
           )}
           <ShoppingCart className="h-6 w-6" />
@@ -87,7 +84,7 @@ const CartSheet = () => {
                 </div>
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <Currency value={totalPrice} />
+                  <Currency value={totalPrice()} />
                 </div>
               </div>
               <SheetFooter className="flex flex-col">
