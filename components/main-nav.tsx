@@ -22,7 +22,7 @@ const MainNav = ({categories}: MainNavProps) => {
   }));
 
   return (
-    <nav className="mx-6 flex items-center space-x-4 lg:space-x-6">
+    <div className="mx-6 flex items-center space-x-4 lg:space-x-6">
       {routes.map((route) => (
         <Link
           href={route.href}
@@ -35,7 +35,7 @@ const MainNav = ({categories}: MainNavProps) => {
           {route.label}
         </Link>
       ))}
-    </nav>
+    </div>
   );
 };
 

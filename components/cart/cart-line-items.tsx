@@ -29,7 +29,6 @@ export function CartLineItems({
 }: CartLineItemsProps) {
   const Comp = isScrollable ? ScrollArea : Slot;
   const cart = useCart();
-  // const removeItem = () => cart.removeItem(item.id);
 
   return (
     <Comp className="h-full">
@@ -94,8 +93,8 @@ export function CartLineItems({
                   ) : null}
                 </div>
               </div>
-              {/* <UpdateCart data={item} /> */}
-              <Button
+              <UpdateCart data={item} />
+              {/* <Button
                 variant="outline"
                 size="icon"
                 className="h-8 w-8"
@@ -103,7 +102,7 @@ export function CartLineItems({
               >
                 <TrashIcon className="h-3 w-3" aria-hidden="true" />
                 <span className="sr-only">Delete item</span>
-              </Button>
+              </Button> */}
             </div>
             {variant === "default" ? <Separator /> : null}
           </div>

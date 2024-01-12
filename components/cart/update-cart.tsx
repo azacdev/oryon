@@ -1,106 +1,80 @@
-"use client";
-
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 
-// import { deleteCartItem, updateCartItem } from "@/lib/actions/cart"
-// import { catchError } from "@/lib/utils"
+import useCart from "@/hooks/use-cart";
+import getProducts from "@/actions/get-products";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Products } from "@/types/types";
-import useCart from "@/hooks/use-cart";
 
 interface UpdateCartProps {
   data: Products;
 }
 
 export function UpdateCart({ data }: UpdateCartProps) {
-  const id = React.useId();
-  const [isPending, startTransition] = React.useTransition();
-
   const cart = useCart();
-  
+  const [product, setProduct] = useState<Products | undefined>();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const fetchedProducts = await getProducts({ isFeatured: true });
+      setProduct(fetchedProducts.find((p) => p.id === data.id));
+    };
+
+    fetchProducts();
+  }, [data.id]);
+
+  const increaseQuantity = () => {
+    cart.increaseQuantity(data.id, product.quantity);
+  };
+
+  const decreaseQuantity = () => {
+    cart.decreaseQuantity(data.id);
+  };
+
+  const removeItem = () => {
+    cart.removeItem(data.id);
+  };
 
   return (
-    <div>
-    {/* <div className="flex w-full items-center justify-between space-x-2 xs:w-auto xs:justify-normal"> */}
-      {/* <div className="flex items-center">
+    <div className="ml-4 flex w-full items-center justify-between space-x-2 xs:w-auto xs:justify-normal">
+      <div className="flex items-center">
         <Button
-          id={`${id}-decrement`}
           variant="outline"
           size="icon"
           className="h-8 w-8 rounded-r-none"
-          // onClick={() => {
-          //   startTransition(async () => {
-          //     try {
-          //       await updateCartItem({
-          //         productId: cartLineItem.id,
-          //         quantity: Number(cartLineItem.quantity) - 1,
-          //       })
-          //     } catch (err) {
-          //       catchError(err)
-          //     }
-          //   })
-          // }}
-          disabled={isPending}
+          onClick={decreaseQuantity}
         >
           <MinusIcon className="h-3 w-3" aria-hidden="true" />
           <span className="sr-only">Remove one item</span>
         </Button>
         <Input
-          id={`${id}-quantity`}
           type="number"
           min="0"
           className="h-8 w-14 rounded-none border-x-0"
-          // value={cartLineItem.quantity}
-          // onChange={(e) => {
-          //   startTransition(async () => {
-          //     try {
-          //       await updateCartItem({
-          //         productId: cartLineItem.id,
-          //         quantity: Number(e.target.value),
-          //       })
-          //     } catch (err) {
-          //       catchError(err)
-          //     }
-          //   })
-          // }}
-          disabled={isPending}
+          value={data.quantity}
+          readOnly
         />
         <Button
-          id={`${id}-increment`}
           variant="outline"
           size="icon"
           className="h-8 w-8 rounded-l-none"
-          // onClick={() => {
-          //   startTransition(async () => {
-          //     try {
-          //       await updateCartItem({
-          //         productId: cartLineItem.id,
-          //         quantity: Number(cartLineItem.quantity) + 1,
-          //       })
-          //     } catch (err) {
-          //       catchError(err)
-          //     }
-          //   })
-          // }}
-          disabled={isPending}
+          onClick={increaseQuantity}
         >
           <PlusIcon className="h-3 w-3" aria-hidden="true" />
           <span className="sr-only">Add one item</span>
         </Button>
-      </div> */}
-      {/* <Button
-        // id={`${id}-delete`}
+      </div>
+      <Button
         variant="outline"
         size="icon"
         className="h-8 w-8"
         onClick={removeItem}
-        disabled={isPending}
       >
         <TrashIcon className="h-3 w-3" aria-hidden="true" />
         <span className="sr-only">Delete item</span>
-      </Button> */}
+      </Button>
     </div>
   );
 }

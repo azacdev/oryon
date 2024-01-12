@@ -4,36 +4,52 @@ import { toast } from "sonner";
 
 import { Products } from "@/types/types";
 
+interface CartItem extends Products {
+  quantity: number;
+}
+
 interface CartStore {
-  items: Products[];
+  cart: Products[];
+  quantity: () => number;
   addItem: (data: Products) => void;
   removeItem: (id: string) => void;
+  increaseQuantity: (id: string, maxQuantity: number) => void;
+  decreaseQuantity: (id: string) => void;
   removeAll: () => void;
 }
 
 const useCart = create(
   persist<CartStore>(
     (set, get) => ({
-      items: [],
-      addItem: (data: Products) => {
-        const currentItems = get().items;
-        const existingItem = currentItems.find((item) => item.id === data.id);
-
-        if (existingItem) {
-          return toast.warning("Item already in cart", {
-            position: "top-center",
-          });
+      cart: [],
+      quantity: (): number => {
+        const { cart } = get();
+        if (cart.length) {
+          return cart
+            .map((item) => Number(item.quantity))
+            .reduce((a, b) => a + b);
         }
-
-        set({ items: [...get().items, data] });
-        toast.success("Item added to cart", {
-          position: "top-center",
-        });
+        return 0;
+      },
+      addItem: (product: Products) => {
+        const { cart } = get();
+        const updatedCart = addToCart(cart, product);
+        set({ cart: updatedCart });
+      },
+      increaseQuantity: (id: string, maxQuantity: number) => {
+        const { cart } = get();
+        const updatedCart = incrementInCart(cart, id, maxQuantity);
+        set({ cart: updatedCart });
+      },
+      decreaseQuantity: (id: string) => {
+        const { cart } = get();
+        const updatedCart = decrementInCart(cart, id);
+        set({ cart: updatedCart });
       },
       removeItem: (id: string) => {
-        set({ items: [...get().items.filter((item) => item.id !== id)] });
+        set({ cart: [...get().cart.filter((item) => item.id !== id)] });
       },
-      removeAll: () => set({ items: [] }),
+      removeAll: () => set({ cart: [] }),
     }),
     {
       name: "cart-storage",
@@ -41,5 +57,73 @@ const useCart = create(
     }
   )
 );
+
+const addToCart = (cart: CartItem[], product: Products): CartItem[] => {
+  const item = cart.find((item) => item.id === product.id);
+
+  if (item) {
+    return cart.map((item) => {
+      if (item.id === product.id) {
+        const itemQuantity = item.quantity >= 1 ? item.quantity : 1;
+        return { ...item, quantity: itemQuantity };
+      }
+      return item;
+    });
+  }
+
+  return [...cart, { ...product, quantity: 1 }];
+};
+
+const incrementInCart = (
+  cart: CartItem[],
+  id: string,
+  maxQuantity: number
+): CartItem[] => {
+  const item = cart.find((item) => item.id === id);
+  if (item) {
+    return cart.map((item) => {
+      if (item.id === id) {
+        const newQuantity = item.quantity + 1;
+        const incrementedQuantity =
+          newQuantity <= maxQuantity ? newQuantity : maxQuantity;
+        return { ...item, quantity: incrementedQuantity };
+      }
+      return item;
+    });
+  }
+  return cart;
+};
+
+const decrementInCart = (cart: CartItem[], id: string): CartItem[] => {
+  const item = cart.find((item) => item.id === id);
+  if (item) {
+    return cart.map((item) => {
+      if (item.id === id) {
+        const itemQuantity = item.quantity > 1 ? item.quantity - 1 : 1;
+        return { ...item, quantity: itemQuantity };
+      }
+      return item;
+    });
+  }
+  return cart;
+};
+
+const setCountInCart = (
+  cart: CartItem[],
+  id: string,
+  quantity: number
+): CartItem[] => {
+  const item = cart.find((item) => item.id === id);
+  if (item) {
+    return cart.map((item) => {
+      if (item.id === id) {
+        const itemCount = quantity >= 1 ? quantity : 1;
+        return { ...item, quantity: itemCount };
+      }
+      return item;
+    });
+  }
+  return cart;
+};
 
 export default useCart;

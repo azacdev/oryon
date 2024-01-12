@@ -4,7 +4,7 @@ import { ProductCardSkeleton } from "@/components/skeletons/product-card-skeleto
 
 export default function ProductsLoading() {
   return (
-    <Shell>
+    <Shell className="mt-16">
       <div>
         <Skeleton className="h-96 w-full" />
       </div>

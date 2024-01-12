@@ -32,7 +32,7 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const category = await getCategory(params.categoryId);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white mt-16">
       <Container>
         <Billboard data={category.billboard} />
         <div className="px-4 sm:px-6 lg-px-8 space-y-10 pb-10">

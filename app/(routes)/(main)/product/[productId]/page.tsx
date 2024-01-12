@@ -17,9 +17,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
   const suggestedProduct = await getProducts({
     categoryId: product?.category?.id,
   });
-
+  
   return (
-    <div className="bg-white">
+    <div className="bg-white mt-16">
       <Container>
         <div className="px-4 py-10 sm:px-6 lg:px-8 space-y-10 pb-10">
           <div className="flex flex-col gap-8 md:flex-row md:gap-16">

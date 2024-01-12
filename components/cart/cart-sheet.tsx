@@ -32,7 +32,7 @@ const CartSheet = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const items = useCart((state) => state.items);
+  const items = useCart((state) => state.cart);
   const removeAll = useCart((state) => state.removeAll);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const CartSheet = () => {
             <Badge
               variant="secondary"
               className="absolute -right-2 -top-2 h-6 w-6 justify-center rounded-full p-2.5"
-            >
+            >0
               {items.length}
             </Badge>
           )}

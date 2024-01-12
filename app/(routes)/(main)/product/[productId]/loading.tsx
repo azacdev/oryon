@@ -8,7 +8,7 @@ import { ProductCardSkeleton } from "@/components/skeletons/product-card-skeleto
 
 export default function ProductLoading() {
   return (
-    <Shell>
+    <Shell className="mt-16">
       <div className="flex flex-col gap-8 md:flex-row md:gap-16">
         <div className="w-full md:w-1/2">
           <div className="flex flex-col gap-2">
