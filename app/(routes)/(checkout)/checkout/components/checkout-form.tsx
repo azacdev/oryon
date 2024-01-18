@@ -39,6 +39,8 @@ const CheckoutForm = () => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.cart);
   const removeAll = useCart((state) => state.removeAll);
+  const totalPrice = useCart((state) => state.totalPrice);
+  const quantity = useCart((state) => state.quantity);
 
   useEffect(() => {
     if (searchParams.get("sucess")) {
@@ -61,6 +63,8 @@ const CheckoutForm = () => {
     },
   });
 
+  console.log(items);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const { data } = await axios.post(
@@ -68,6 +72,7 @@ const CheckoutForm = () => {
         {
           productIds: items.map((item) => item.id),
           values: values,
+          items: items,
         }
       );
       window.location.href = data.data.authorization_url;
