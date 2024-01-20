@@ -39,11 +39,9 @@ const CheckoutForm = () => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.cart);
   const removeAll = useCart((state) => state.removeAll);
-  const totalPrice = useCart((state) => state.totalPrice);
-  const quantity = useCart((state) => state.quantity);
 
   useEffect(() => {
-    if (searchParams.get("sucess")) {
+    if (searchParams.get("success")) {
       toast("Payment completed");
       removeAll();
     }
@@ -62,8 +60,6 @@ const CheckoutForm = () => {
       state: "",
     },
   });
-
-  console.log(items);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
