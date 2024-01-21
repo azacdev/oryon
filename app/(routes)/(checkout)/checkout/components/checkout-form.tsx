@@ -71,7 +71,23 @@ const CheckoutForm = () => {
           items: items,
         }
       );
-      window.location.href = data.data.authorization_url;
+      // window.location.href = data.data.authorization_url;
+
+      const transactionReference = data.data.reference;
+      console.log(transactionReference);
+
+      // Call the verification endpoint
+      const verifyUrl = `${process.env.NEXT_PUBLIC_API_URL}/verify-payment/${transactionReference}`;
+      const verifyResponse = await axios.get(verifyUrl);
+      console.log(verifyResponse);
+
+      // Handle the verification response as needed
+      if (verifyResponse.data === "Verification successful") {
+        toast("Payment completed");
+        removeAll();
+      } else {
+        toast("Payment verification failed");
+      }
     } catch (error) {
       console.error(error);
     }
