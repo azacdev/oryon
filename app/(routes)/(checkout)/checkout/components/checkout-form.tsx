@@ -39,16 +39,24 @@ const CheckoutForm = () => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.cart);
   const removeAll = useCart((state) => state.removeAll);
-
+  
   useEffect(() => {
-    if (searchParams.get("success")) {
-      toast("Payment completed");
-      removeAll();
-    }
+    const trxref = searchParams.get("trxref");
+    console.log(trxref);
+    console.log(searchParams.get("trxref"));
+    // if (searchParams.get("trxref")) {
+    //   toast("Payment completed");
+    //   removeAll();
+    // }
 
-    if (searchParams.get("canceled")) {
-      toast("Something went wrong");
-    }
+    // if (searchParams.get("success")) {
+    //   toast("Payment completed");
+    //   removeAll();
+    // }
+
+    // if (searchParams.get("canceled")) {
+    //   toast("Something went wrong");
+    // }
   }, [searchParams, removeAll]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,7 +79,7 @@ const CheckoutForm = () => {
           items: items,
         }
       );
-      
+
       window.location.href = data.data.authorization_url;
 
       const transactionReference = data.data.reference;
