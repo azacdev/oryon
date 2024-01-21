@@ -71,7 +71,7 @@ const CheckoutForm = () => {
           items: items,
         }
       );
-      // window.location.href = data.data.authorization_url;
+      window.location.href = data.data.authorization_url;
 
       const transactionReference = data.data.reference;
       console.log(transactionReference);
