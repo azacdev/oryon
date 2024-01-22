@@ -41,30 +41,16 @@ const CheckoutForm = () => {
   const removeAll = useCart((state) => state.removeAll);
 
   useEffect(() => {
-    const trxref = searchParams.get("trxref");
-    console.log(trxref);
+    useEffect(() => {
+      if (searchParams.get("success")) {
+        toast("Payment completed");
+        removeAll();
+      }
 
-    if (trxref) {
-      const getStatus = async () => {
-        try {
-          const verifyUrl = `${process.env.NEXT_PUBLIC_API_URL}/verify-payment/?reference=${trxref}`;
-          const verifyResponse = await axios.get(verifyUrl);
-
-          // Check the verification response
-          if (verifyResponse.data === "Verification successful") {
-            toast("Payment completed");
-            removeAll();
-          } else {
-            toast("Payment verification failed");
-          }
-        } catch (error) {
-          console.error("Error during payment verification:", error);
-          toast("An error occurred during payment verification");
-        }
-      };
-
-      getStatus();
-    }
+      if (searchParams.get("canceled")) {
+        toast("Something went wrong");
+      }
+    }, [searchParams, removeAll]);
   }, [searchParams, removeAll]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -89,23 +75,6 @@ const CheckoutForm = () => {
       );
 
       window.location.href = data.data.authorization_url;
-
-      // const transactionReference = data.data.reference;
-      // console.log(transactionReference);
-
-      // // Call the verification endpoint
-      // const verifyUrl = `${process.env.NEXT_PUBLIC_API_URL}/verify-payment/?reference=${transactionReference}`;
-      // const verifyResponse = await axios.get(verifyUrl);
-      // console.log(verifyResponse);
-
-      // // Handle the verification response as needed
-
-      // if (verifyResponse.data === "Verification successful") {
-      //   toast("Payment completed");
-      //   removeAll();
-      // } else {
-      //   toast("Payment verification failed");
-      // }
     } catch (error) {
       console.error(error);
     }
