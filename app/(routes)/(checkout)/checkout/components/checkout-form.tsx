@@ -41,16 +41,15 @@ const CheckoutForm = () => {
   const removeAll = useCart((state) => state.removeAll);
 
   useEffect(() => {
-    useEffect(() => {
-      if (searchParams.get("success")) {
-        toast("Payment completed");
-        removeAll();
-        router.push("/");
-      }
+    if (searchParams.get("success")) {
+      toast("Payment completed");
+      removeAll();
+      router.push("/");
+    }
 
-      if (searchParams.get("canceled")) {
-        toast("Something went wrong");
-      }
+    if (searchParams.get("canceled")) {
+      toast("Something went wrong");
+    }
   }, [searchParams, removeAll]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -84,7 +83,7 @@ const CheckoutForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="h-full w-full flex-1pb-12 pt-10 lg:flex-initial lg:pt-16 px-8 mx-auto max-w-xl"
+        className="h-full w-full flex-1 pb-12 pt-10 lg:flex-initial lg:pt-16 px-8 mx-auto max-w-xl"
       >
         <div className="space-y-2 flex flex-col gap-4">
           <FormField
