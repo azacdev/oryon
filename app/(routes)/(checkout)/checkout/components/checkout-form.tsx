@@ -45,12 +45,12 @@ const CheckoutForm = () => {
       if (searchParams.get("success")) {
         toast("Payment completed");
         removeAll();
+        router.push("/");
       }
 
       if (searchParams.get("canceled")) {
         toast("Something went wrong");
       }
-    }, [searchParams, removeAll]);
   }, [searchParams, removeAll]);
 
   const form = useForm<z.infer<typeof formSchema>>({
