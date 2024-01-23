@@ -9,3 +9,9 @@ export const formatter = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "NGN",
 });
+
+export function isMacOs() {
+  if (typeof window === "undefined") return false
+
+  return window.navigator.userAgent.includes("Mac")
+}

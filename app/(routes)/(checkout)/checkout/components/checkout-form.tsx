@@ -42,13 +42,15 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     if (searchParams.get("success")) {
-      toast("Payment completed");
+      toast.success("Payment completed", { position: "top-center" });
       removeAll();
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 4000);
     }
 
     if (searchParams.get("canceled")) {
-      toast("Something went wrong");
+      toast.error("Something went wrong", { position: "top-center" });
     }
   }, [searchParams, removeAll]);
 
@@ -83,7 +85,7 @@ const CheckoutForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="h-full w-full flex-1 pb-12 pt-10 lg:flex-initial lg:pt-16 px-8 mx-auto max-w-xl"
+        className="h-full w-full flex-1 pb-12 lg:flex-initial lg:pt-16 px-8 mx-auto max-w-xl"
       >
         <div className="space-y-2 flex flex-col gap-4">
           <FormField

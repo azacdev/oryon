@@ -13,18 +13,20 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "./ui/button";
 import useCart from "@/hooks/use-cart";
 import { MouseEventHandler } from "react";
+import { UpdateCart } from "./cart/update-cart";
 
 interface InfoProps {
   product: Products;
 }
 const Info = ({ product }: InfoProps) => {
-  const cart = useCart()
-  
+  const cart = useCart();
+  const items = useCart((state) => state.cart);
+
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     cart.addItem(product);
   };
-  
+
   return (
     <div className="flex w-full flex-col gap-4 md:w-1/2">
       <div className="space-y-2">
@@ -37,7 +39,7 @@ const Info = ({ product }: InfoProps) => {
 
       <div className="flex items-center gap-x-4">
         <h2 className="font-semibold">Size:</h2>
-        <div>{product?.size?.name}</div>
+        <span>{product?.size?.name}</span>
       </div>
 
       <div className="flex items-center gap-x-4">
@@ -48,23 +50,30 @@ const Info = ({ product }: InfoProps) => {
         />
       </div>
 
-      <div className="mt-10">
-        <Button variant="default" onClick={onAddToCart}>Add to cart</Button>
+      <div>
+        <p className="text-base">{product.quantity} in stock</p>
       </div>
-      {/* <Accordion
-          type="single"
-          collapsible
-          className="w-full"
-          defaultValue="description"
-        >
-          <AccordionItem value="description" className="border-none">
-            <AccordionTrigger>Description</AccordionTrigger>
-            <AccordionContent>
-              {product.description ??
-                "No description is available for this product."}
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion> */}
+
+      <div className="">
+        <Button variant="default" onClick={onAddToCart}>
+          Add to cart
+        </Button>
+      </div>
+      {/* <UpdateCart data={items} /> */}
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        defaultValue="description"
+      >
+        <AccordionItem value="description" className="border-none">
+          <AccordionTrigger>Description</AccordionTrigger>
+          <AccordionContent>
+            {product.description ??
+              "No description is available for this product."}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       <Separator className="md:hidden" />
     </div>
   );

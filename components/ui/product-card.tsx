@@ -72,7 +72,7 @@ const ProductCard = ({ product, className, ...props }: ProductCardProps) => {
           </CardDescription>
         </CardContent>
       </Link>
-      <CardFooter className="p-4 pt-1">
+      <CardFooter className="p-4">
         <div className="flex w-full items-center space-x-2">
           <Button size="sm" className="h-8 w-full rounded-sm" onClick={onAddToCart}>
             Add to cart

@@ -3,9 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 
 interface ModalProps {
@@ -23,7 +20,7 @@ const Modal = ({ open, onClose, children }: ModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onChange}>
-      <DialogContent className="w-full max-w-3xl">
+      <DialogContent className="w-full max-w-3xl max-h-[98%]]">
         <div>{children}</div>
       </DialogContent>
     </Dialog>

@@ -102,7 +102,7 @@ const Footer = () => {
                       rel="noreferrer"
                       className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      Contanct
+                      Contact
                       <span className="sr-only">contact</span>
                     </Link>
                   </li>

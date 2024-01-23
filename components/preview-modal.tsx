@@ -3,7 +3,13 @@
 import usePreviewModal from "@/hooks/use-preview-modals";
 import Modal from "@/components/ui/modal";
 import { GalleryTab } from "@/components/gallery/gallery-tab";
-import Info from "@/components/info";
+import Currency from "./ui/currency";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 const PreviewModal = () => {
   const preview = usePreviewModal();
@@ -19,7 +25,26 @@ const PreviewModal = () => {
           <GalleryTab images={product.images} />
         </div>
         <div className="sm:col-span-8 lg:col-span-7">
-          <Info product={product} />
+          <div className="">
+            <h2 className=" text-2xl font-bold">{product.name}</h2>
+            <p className="text-base">
+              <Currency value={product?.price} />
+            </p>
+          </div>
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full"
+            defaultValue="description"
+          >
+            <AccordionItem value="description" className="border-none">
+              <AccordionTrigger>Description</AccordionTrigger>
+              <AccordionContent>
+                {product.description ??
+                  "No description is available for this product."}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </Modal>

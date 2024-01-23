@@ -36,6 +36,9 @@ const useCart = create(
         const { cart } = get();
         const updatedCart = addToCart(cart, product);
         set({ cart: updatedCart });
+        toast.success("Item has been added to cart", {
+          position: "top-center",
+        });
       },
       increaseQuantity: (id: string, maxQuantity: number) => {
         const { cart } = get();
