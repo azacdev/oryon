@@ -22,7 +22,7 @@ const ProductList = ({ title, description, items }: ProductListProps) => {
         </p>
       </div>
       {items.length === 0 && <NoResults />}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <Suspense
           fallback={Array.from({ length: 8 }).map((_, i) => (
             <ProductCardSkeleton key={i} />
