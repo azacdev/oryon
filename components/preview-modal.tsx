@@ -2,7 +2,6 @@
 
 import usePreviewModal from "@/hooks/use-preview-modals";
 import Modal from "@/components/ui/modal";
-import { GalleryTab } from "@/components/gallery/gallery-tab";
 import Currency from "./ui/currency";
 import {
   Accordion,
@@ -10,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "./ui/accordion";
+import Image from "next/image";
 
 const PreviewModal = () => {
   const preview = usePreviewModal();
@@ -18,11 +18,21 @@ const PreviewModal = () => {
   if (!product) {
     return null;
   }
+
+  const ImageUrl = product.images[0]?.url;
+
   return (
     <Modal open={preview.isOpen} onClose={preview.onClose}>
       <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
         <div className="sm:col-span-4 lg:col-span-5">
-          <GalleryTab images={product.images} />
+          <Image
+            src={ImageUrl}
+            alt="product-image"
+            width={200}
+            height={200}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="sm:col-span-8 lg:col-span-7">
           <div className="">

@@ -38,6 +38,7 @@ const useCart = create(
         set({ cart: updatedCart });
         toast.success("Item has been added to cart", {
           position: "top-center",
+          duration: 800,
         });
       },
       increaseQuantity: (id: string, maxQuantity: number) => {

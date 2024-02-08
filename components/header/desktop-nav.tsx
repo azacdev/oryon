@@ -6,13 +6,13 @@ import { usePathname } from "next/navigation";
 import { Category } from "@/types/types";
 import { cn } from "@/lib/utils";
 
-interface MainNavProps {
-  categories: Category[]
+interface DesktopNavProps {
+  categories: Category[];
 }
 
 export const revalidate = 0;
 
-const MainNav = ({categories}: MainNavProps) => {
+const DesktopNav = ({ categories }: DesktopNavProps) => {
   const pathname = usePathname();
 
   const routes = categories.map((category) => ({
@@ -22,7 +22,7 @@ const MainNav = ({categories}: MainNavProps) => {
   }));
 
   return (
-    <div className="mx-6 flex items-center space-x-4 lg:space-x-6">
+    <div className="mx-6 items-center space-x-4 lg:space-x-6 hidden lg:flex">
       {routes.map((route) => (
         <Link
           href={route.href}
@@ -39,4 +39,4 @@ const MainNav = ({categories}: MainNavProps) => {
   );
 };
 
-export default MainNav;
+export default DesktopNav;

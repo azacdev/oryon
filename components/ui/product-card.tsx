@@ -1,16 +1,16 @@
 "use client";
 
 import { MouseEventHandler } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { EyeOpenIcon } from "@radix-ui/react-icons";
 
+import useCart from "@/hooks/use-cart";
 import { Products } from "@/types/types";
 import usePreviewModal from "@/hooks/use-preview-modals";
-import useCart from "@/hooks/use-cart";
+import { cn } from "@/lib/utils";
 
 import Currency from "@/components/ui/currency";
-import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
@@ -28,9 +28,9 @@ interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const ProductCard = ({ product, className, ...props }: ProductCardProps) => {
-  const cart = useCart()
+  const cart = useCart();
   const previewModal = usePreviewModal();
-  
+
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     cart.addItem(product);
@@ -74,7 +74,11 @@ const ProductCard = ({ product, className, ...props }: ProductCardProps) => {
       </Link>
       <CardFooter className="p-4">
         <div className="flex w-full items-center space-x-2">
-          <Button size="sm" className="h-8 w-full rounded-sm" onClick={onAddToCart}>
+          <Button
+            size="sm"
+            className="h-8 w-full rounded-sm"
+            onClick={onAddToCart}
+          >
             Add to cart
           </Button>
           <Button
