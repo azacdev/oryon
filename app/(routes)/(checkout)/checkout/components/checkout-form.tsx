@@ -52,7 +52,7 @@ const CheckoutForm = () => {
     if (searchParams.get("canceled")) {
       toast.error("Something went wrong", { position: "top-center" });
     }
-  }, [searchParams, removeAll]);
+  }, [searchParams, removeAll, router]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
