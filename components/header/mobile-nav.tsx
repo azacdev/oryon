@@ -61,6 +61,7 @@ export function MobileNav({ categories }: MobileNavProps) {
                   "text-lg font-medium transition-colors hover:text-black w-full",
                   route.active ? "text-black" : "text-neutral-500"
                 )}
+                onClick={() => setIsOpen(false)}
               >
                 <Separator className="!text-black h-1 mb-2" />
                 <span className="py-2  pl-6">{route.label}</span>
