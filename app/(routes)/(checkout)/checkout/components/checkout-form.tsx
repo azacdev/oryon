@@ -12,16 +12,8 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -32,6 +24,9 @@ const formSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
   phone: z.string().min(1, "Phone number is required").max(15),
   state: z.string().min(0, "State is required").max(50),
+  city: z.string().min(0, "State is required").max(50),
+  address: z.string().min(0, "State is required").max(50),
+  postalCode: z.string().min(0, "State is required").max(50),
 });
 
 const CheckoutForm = () => {
@@ -93,10 +88,9 @@ const CheckoutForm = () => {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Fullname</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="First and lastname"
+                    placeholder="Name"
                     className="w-full outline-none border-b border-black"
                     {...field}
                   />
@@ -110,7 +104,6 @@ const CheckoutForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Email address"
@@ -127,10 +120,9 @@ const CheckoutForm = () => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Phone (Eg. +2348137926904)"
+                    placeholder="Phone number"
                     className="w-full outline-none border-b border-black"
                     {...field}
                   />
@@ -144,22 +136,61 @@ const CheckoutForm = () => {
             name="state"
             render={({ field }) => (
               <FormItem>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormLabel>State</FormLabel>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="State" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Kano">Kano</SelectItem>
-                    <SelectItem value="Kaduna">Kaduna</SelectItem>
-                    <SelectItem value="Abuja">Abuja</SelectItem>
-                  </SelectContent>
-                </Select>
+                <FormControl>
+                  <Input
+                    placeholder="State"
+                    className="w-full outline-none border-b border-black"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="Address"
+                    className="w-full outline-none border-b border-black"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="City"
+                    className="w-full outline-none border-b border-black"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="postalCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    placeholder="Postal code"
+                    className="w-full outline-none border-b border-black"
+                    {...field}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
